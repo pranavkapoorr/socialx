@@ -1,0 +1,12 @@
+.DS_Store
+.dart_tool/
+.idea
+android
+ios
+test
+.packages
+.pub/
+
+build/
+
+.flutter-plugins

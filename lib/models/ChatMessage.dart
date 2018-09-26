@@ -19,8 +19,7 @@ List<ChatMessage> dummyDataChat = [
       senderName: "Sahil Seth",
       message: "Hey I have hacked whatsapp!",
       time: "17:30",
-      avatarUrl:
-      "https://media.licdn.com/dms/image/C4D03AQGxLV7vydUjcw/profile-displayphoto-shrink_200_200/0?e=1536796800&v=beta&t=2LJRvqa-_JO5IpPOvt7FabyF0Xs6P_IUSCbfU2djbtQ",
+      avatarUrl:"https://scontent.fyyz1-1.fna.fbcdn.net/v/t1.0-9/38257299_2333915396625556_3838080181268905984_n.jpg?_nc_cat=100&oh=0efb38d9a318cf22e7519dffb448c622&oe=5C1EE044",
       receiverName: "Pranav Kapoor"),
   new ChatMessage(
       senderName: "Sahil Shankra",

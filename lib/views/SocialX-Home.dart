@@ -52,41 +52,75 @@ class _SocialXHomeState extends State<SocialXHome> with TickerProviderStateMixin
   }
 
 
-  Widget _scaffold() => CommonScaffold(
-    appTitle: _page==0?"Profile":_page==1?"Feed":"Conversations",
-    bodyData: _loaded?Stack(
-      children: <Widget>[
-        new PageView(
-          children: <Widget>[
-            new Profile(),
-            new TimeLine(),
-            new ChatScreen()
-          ],
-          controller: _pageController,
-          onPageChanged: onPageChanged,
-        ),
-        //customNavigationBar()
+  Widget _scaffold() => Scaffold(
+    appBar: new AppBar(
+      title: Text(_page==0?"Profile":_page==1?"Feed":"Conversations"),
+      actions: <Widget>[
+        _page==0?new IconButton(icon: Icon(Icons.edit), onPressed: (){}):Text(''),
+        _page==1?new IconButton(icon: Icon(Icons.search), onPressed: (){}):Text(''),
       ],
+    ),
+    body: _loaded?new PageView(
+      children: <Widget>[
+        new Profile(),
+        new TimeLine(),
+        new ChatScreen()
+      ],
+      controller: _pageController,
+      onPageChanged: onPageChanged,
     ):Center(child: CircularProgressIndicator(),),
-    backGroundColor: Colors.blue.shade50,//new Color(#FFE3F2FD),
-    showDrawer: true,
-    showBottomNav: true,
-    showFAB: true,
-    floatingIcon: Icon(Icons.home,color: _page==1?Colors.white:Colors.black,size: _page==1?40.0:30.0,),
-    centerDocked: true,
-    leftBottomBarWidget: _bottomBarWidget("Profile",_page==0?20.0:12.0,_page==0?Colors.white:Colors.black),
-    rightBottomBarWidget: _bottomBarWidget("Messages",_page==2?20.0:12.0,_page==2?Colors.white:Colors.black),
+    backgroundColor: Colors.blue.shade50,//new Color(#FFE3F2FD),
+    drawer: new CommonDrawer(),
+    floatingActionButton:new FloatingActionButton(child: Icon(Icons.home,color: _page==1?Colors.white:Colors.black,size: _page==1?40.0:30.0,),onPressed: ()=>_navigationTapped(1)),
+    floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+    bottomNavigationBar: new BottomAppBar(
+      child: Ink(
+        height: 50.0,
+        decoration: new BoxDecoration(
+            gradient: new LinearGradient(colors: [
+              new Color.fromRGBO(103, 218, 255, 1.0),
+              new Color.fromRGBO(3, 169, 244, 1.0),
+              new Color.fromRGBO(0, 122, 193, 1.0),
+              Colors.blueGrey.shade800,
+              Colors.black87,
+            ])
+        ),
+        child: new Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(
+                height: double.infinity,
+                child:  _bottomBarWidget("Profile",_page==0?20.0:12.0,_page==0?Colors.white:Colors.black,0),
+            ),
+            new SizedBox(
+              width: 20.0,
+            ),
+            SizedBox(
+              height: double.infinity,
+              child: _bottomBarWidget("Messages",_page==2?20.0:12.0,_page==2?Colors.white:Colors.black,2),
+            ),
+          ],
+        ),
+      ),
+    ),
   );
 
-  Widget _bottomBarWidget(String name, double size, Color color){
-    return new Text(
+  Widget _bottomBarWidget(String name, double size, Color color,int page){
+    return new InkWell(
+      radius: 15.0,
+      splashColor: Colors.transparent,
+      onTap: ()=>_navigationTapped(page),
+      child: Center(
+      child:new Text(
       name,
       style: new TextStyle(
         color: color,
         fontSize: size,
         fontWeight: FontWeight.bold,
-        //color: Colors.white
       ),
+      )
+      )
     );
   }
   @override
@@ -102,26 +136,6 @@ class _SocialXHomeState extends State<SocialXHome> with TickerProviderStateMixin
         page,
         duration: const Duration(milliseconds: 300),
         curve: Curves.ease
-    );
-  }
-  Widget customNavigationBar(){
-    return new Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        new Padding(
-            padding: const EdgeInsets.all(2.0),
-            child: new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                new IconButton(icon: new Icon(_page==0?Icons.person:Icons.person_outline,color: _page==1||_page==0?Colors.white:Colors.black26),iconSize: 30.0, onPressed: ()=>_navigationTapped(0)),
-                new FloatingActionButton(onPressed: ()=>_navigationTapped(1),child: Image(image: AssetImage("images/logo.png"),color:_page==1?Colors.black:Colors.white,),backgroundColor: _page==1?Colors.white.withOpacity(0.7):Colors.transparent,shape: CircleBorder(side: BorderSide(color: _page==0?Colors.white:Colors.black26,width: 2.5,))),
-                new IconButton(icon: new Icon(_page==2?Icons.chat:Icons.chat_bubble_outline,color: _page==1||_page==0?Colors.white:Colors.black45,),iconSize: 25.0,onPressed: ()=>_navigationTapped(2)),
-              ],
-            )
-        ),
-      ],
     );
   }
 

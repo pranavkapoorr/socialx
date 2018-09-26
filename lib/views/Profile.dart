@@ -10,50 +10,56 @@ class _ProfileState extends State<Profile>{
   var deviceSize;
 
   //Column1
-  Widget profileColumn() => Container(
-    height: deviceSize.height * 0.24,
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        ProfileTile(
-          title: "Pranav Kapoor",
-          subtitle: "Developer",
-        ),
-        SizedBox(
-          height: 10.0,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  Widget profileColumn() => Padding(
+    padding: const EdgeInsets.fromLTRB(8.0,8.0,8.0,0.0),
+    child: Card(
+      elevation: 2.0,
+      child: Container(
+        height: deviceSize.height * 0.24,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.chat),
-              //color: Colors.black,
-              onPressed: () {},
+            ProfileTile(
+              title: "Pranav Kapoor",
+              subtitle: "Developer",
             ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius:
-                new BorderRadius.all(new Radius.circular(50.0)),
-                border: new Border.all(
-                  color: Theme.of(context).secondaryHeaderColor,//Colors.black,
-                  width: 4.0,
+            SizedBox(
+              height: 10.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.chat),
+                  //color: Colors.black,
+                  onPressed: () {},
                 ),
-              ),
-              child: CircleAvatar(
-                backgroundImage: NetworkImage(
-                    "https://scontent.fyyz1-1.fna.fbcdn.net/v/t1.0-1/p320x320/11230099_10206835592669367_2911893136176495642_n.jpg?_nc_cat=111&oh=005e87a02bccaf399b5152534993298c&oe=5C2A1D27"),
-                foregroundColor: Colors.black,
-                radius: 40.0,
-              ),
-            ),
-            IconButton(
-              icon: Icon(Icons.call),
-              //color: Colors.black,
-              onPressed: () {},
-            ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius:
+                    new BorderRadius.all(new Radius.circular(50.0)),
+                    border: new Border.all(
+                      color: Theme.of(context).secondaryHeaderColor,//Colors.black,
+                      width: 4.0,
+                    ),
+                  ),
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        "https://scontent.fyyz1-1.fna.fbcdn.net/v/t1.0-1/p320x320/11230099_10206835592669367_2911893136176495642_n.jpg?_nc_cat=111&oh=005e87a02bccaf399b5152534993298c&oe=5C2A1D27"),
+                    foregroundColor: Colors.black,
+                    radius: 40.0,
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.call),
+                  //color: Colors.black,
+                  onPressed: () {},
+                ),
+              ],
+            )
           ],
-        )
-      ],
+        ),
+      ),
     ),
   );
 
@@ -61,6 +67,7 @@ class _ProfileState extends State<Profile>{
 
   //column3
   Widget descColumn() => Container(
+    color: Colors.white,
     height: deviceSize.height * 0.13,
     child: Center(
       child: Padding(
@@ -77,45 +84,52 @@ class _ProfileState extends State<Profile>{
   );
   //column4
   Widget accountColumn() => Container(
-    height: deviceSize.height * 0.3,
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        Column(
+    color: Colors.white10,
+    padding: const EdgeInsets.all(8.0),
+    child: Card(
+      elevation: 2.0,
+      child: Container(
+        height: deviceSize.height * 0.3,
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            ProfileTile(
-              title: "Website",
-              subtitle: "about.me/imthepk",
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                ProfileTile(
+                  title: "Website",
+                  subtitle: "about.me/imthepk",
+                ),
+                ProfileTile(
+                  title: "Phone",
+                  subtitle: "+919876543210",
+                ),
+                ProfileTile(
+                  title: "YouTube",
+                  subtitle: "youtube.com/mtechviral",
+                ),
+              ],
             ),
-            ProfileTile(
-              title: "Phone",
-              subtitle: "+919876543210",
-            ),
-            ProfileTile(
-              title: "YouTube",
-              subtitle: "youtube.com/mtechviral",
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                ProfileTile(
+                  title: "Location",
+                  subtitle: "New Delhi",
+                ),
+                ProfileTile(
+                  title: "Email",
+                  subtitle: "mtechviral@gmail.com",
+                ),
+                ProfileTile(
+                  title: "Facebook",
+                  subtitle: "fb.com/imthepk",
+                ),
+              ],
             ),
           ],
         ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            ProfileTile(
-              title: "Location",
-              subtitle: "New Delhi",
-            ),
-            ProfileTile(
-              title: "Email",
-              subtitle: "mtechviral@gmail.com",
-            ),
-            ProfileTile(
-              title: "Facebook",
-              subtitle: "fb.com/imthepk",
-            ),
-          ],
-        ),
-      ],
+      ),
     ),
   );
 
@@ -144,28 +158,30 @@ class _ProfileState extends State<Profile>{
   }
 }
 
-Widget followColumn(Size deviceSize) => Container(
-  height: deviceSize.height * 0.13,
-  child: Row(
-    mainAxisAlignment: MainAxisAlignment.spaceAround,
-    children: <Widget>[
-      ProfileTile(
-        title: "1.5K",
-        subtitle: "Posts",
+Widget followColumn(Size deviceSize) => Padding(
+  padding: const EdgeInsets.fromLTRB(8.0,0.0,8.0,1.0),
+  child:   Card(
+    elevation: 2.0,
+    child:   Container(
+      height: deviceSize.height * 0.13,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          ProfileTile(
+            title: "1.5K",
+            subtitle: "Posts",
+          ),
+          ProfileTile(
+            title: "2.5K",
+            subtitle: "Followers",
+          ),
+          ProfileTile(
+            title: "1.2K",
+            subtitle: "Following",
+          )
+        ],
       ),
-      ProfileTile(
-        title: "2.5K",
-        subtitle: "Followers",
-      ),
-      ProfileTile(
-        title: "10K",
-        subtitle: "Comments",
-      ),
-      ProfileTile(
-        title: "1.2K",
-        subtitle: "Following",
-      )
-    ],
+    ),
   ),
 );
 

@@ -44,6 +44,7 @@ class CommonScaffold extends StatelessWidget {
   final scaffoldKey;
   final showBottomNav;
   final floatingIcon;
+  final floatingOnTap;
   final centerDocked;
   final elevation;
   final leftBottomBarWidget;
@@ -60,6 +61,7 @@ class CommonScaffold extends StatelessWidget {
         this.showBottomNav = false,
         this.centerDocked = false,
         this.floatingIcon,
+        this.floatingOnTap,
         this.elevation = 4.0,
         this.leftBottomBarWidget,
         this.rightBottomBarWidget
@@ -83,28 +85,14 @@ class CommonScaffold extends StatelessWidget {
         children: <Widget>[
           SizedBox(
             height: double.infinity,
-            child: new InkWell(
-              radius: 10.0,
-              splashColor: Colors.yellow,
-              onTap: () {},
-              child: Center(
-                child:this.leftBottomBarWidget
-              ),
-            ),
+            child: leftBottomBarWidget
           ),
           new SizedBox(
             width: 20.0,
           ),
           SizedBox(
             height: double.infinity,
-            child: new InkWell(
-              onTap: () {},
-              radius: 10.0,
-              splashColor: Colors.yellow,
-              child: Center(
-                child: rightBottomBarWidget
-              ),
-            ),
+            child: rightBottomBarWidget,
           ),
         ],
       ),
@@ -145,7 +133,7 @@ class CommonScaffold extends StatelessWidget {
         //)
             //: null,
         icon: floatingIcon,
-        qrCallback: () {},
+        qrCallback: floatingOnTap,
       )
           : null,
       floatingActionButtonLocation: centerDocked

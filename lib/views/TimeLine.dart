@@ -41,7 +41,8 @@ class _TimeLineState extends State<TimeLine> {
                 )
               ],
             ),
-          ))
+          )),
+      IconButton(icon: Icon(Icons.more_vert),iconSize: 16.0,onPressed: (){},)
     ],
   );
 

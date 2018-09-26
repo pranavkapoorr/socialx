@@ -26,7 +26,7 @@ List<Post> posts = [
       personName: "Pranav Kapoor",
       address: "143 feltham road",
       postTime: "12:50",
-      message: "hey there its my post",
+      message: "hey there its my post hjhjctesdtkiuitrtthguguyuyrwewttouutt5ereygkjoiouyrrtytyijou866erettuyuiyh",
       commentsCount: 12,
       messageImage: "https://scontent.fyyz1-1.fna.fbcdn.net/v/t1.0-1/p320x320/11230099_10206835592669367_2911893136176495642_n.jpg?_nc_cat=111&oh=005e87a02bccaf399b5152534993298c&oe=5C2A1D27",
       likesCount: 2

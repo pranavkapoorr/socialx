@@ -50,13 +50,19 @@ class _TimeLineState extends State<TimeLine> {
   Widget actionColumn(Post post) => ButtonBar(
     alignment: MainAxisAlignment.spaceBetween,
     children: <Widget>[
-      Icon(
-         Icons.thumb_up,
-        color: Colors.green,
+      IconButton(
+        icon: Icon(
+           Icons.thumb_up,
+          color: Colors.green,
+        ),
+        onPressed: (){},
       ),
-      Icon(
-         Icons.comment,
-        color: Colors.blue,
+      IconButton(
+        icon: Icon(
+           Icons.comment,
+          color: Colors.blue,
+        ),
+        onPressed: (){},
       ),
       Text(
         post.postTime,

@@ -32,9 +32,12 @@ class SocialXHome extends StatefulWidget {
 }
 
 class _SocialXHomeState extends State<SocialXHome> with TickerProviderStateMixin{
+  AnimationController _iconAnimationController;
+  Animation _iconAnimation;
   PageController _pageController;
   bool _loaded = false;
   int _page = 1;
+  bool _showSearch = false;
 
   void onPageChanged(int page){
     setState((){
@@ -48,22 +51,48 @@ class _SocialXHomeState extends State<SocialXHome> with TickerProviderStateMixin
     super.initState();
     _loaded = true;
     _pageController = new PageController(initialPage: 1);
+    _iconAnimationController = new AnimationController(
+        vsync: this, duration: new Duration(seconds: 1));
+    _iconAnimation = new CurvedAnimation(
+      parent: _iconAnimationController,
+      curve: Curves.easeIn,
+    );
+    _iconAnimation.addListener(() => this.setState(() {}));
 
   }
-
+  Widget searchAppBar(){
+    _iconAnimationController.forward();
+    var searchBar = new ListTile(title: new TextField(decoration: new InputDecoration(hintText: "         search here",suffixIcon: new Icon(Icons.search),border: InputBorder.none),));
+  return new AppBar(
+    leading: new IconButton(icon: new Icon(Icons.arrow_back), onPressed: (){setState(() {
+      _showSearch = false;
+      _iconAnimationController.reset();
+    });}),
+    title: Container(
+      alignment: Alignment.center,
+      decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(5.0)),
+      child: searchBar,
+      width: _iconAnimation.value * 1400.0,height: 40.0,
+    ),
+  );
+  }
 
   Widget _scaffold() => Scaffold(
-    appBar: new AppBar(
+    appBar: _showSearch?searchAppBar():new AppBar(
       title: Text(_page==0?"Profile":_page==1?"Feed":"Conversations"),
       actions: <Widget>[
         _page==0?new IconButton(icon: Icon(Icons.edit), onPressed: (){}):Text(''),
-        _page==1?new IconButton(icon: Icon(Icons.search), onPressed: (){}):Text(''),
+        _page==1?new IconButton(icon: Icon(Icons.search), onPressed: (){
+          setState(() {
+            _showSearch = true;
+          });
+        }):Text(''),
       ],
     ),
     body: _loaded?new PageView(
       children: <Widget>[
         new Profile(),
-        new TimeLine(),
+        new TimeLine(_showSearch),
         new ChatScreen()
       ],
       controller: _pageController,
@@ -144,5 +173,6 @@ class _SocialXHomeState extends State<SocialXHome> with TickerProviderStateMixin
     super.dispose();
     _loaded = false;
     _pageController.dispose();
+    _iconAnimationController.dispose();
   }
 }

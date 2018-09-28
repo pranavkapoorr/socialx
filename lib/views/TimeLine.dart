@@ -3,11 +3,21 @@ import 'package:socialx/models/post.dart';
 import 'package:socialx/views/utils/utils.dart';
 
 class TimeLine extends StatefulWidget{
+  final bool _showSearch;
+  TimeLine(this._showSearch);
+
   @override
   _TimeLineState createState()=> new _TimeLineState();
 }
 
-class _TimeLineState extends State<TimeLine> {
+class _TimeLineState extends State<TimeLine>{
+
+
+  @override
+  initState(){
+    super.initState();
+
+  }
 
   Widget profileColumn(BuildContext context, Post post) => Row(
     mainAxisAlignment: MainAxisAlignment.start,
@@ -104,10 +114,55 @@ class _TimeLineState extends State<TimeLine> {
       ),
     );
   }
-
+  Widget statusBox() => new Card(
+      elevation: 2.0,
+      child: Column(
+          children: <Widget>[
+      Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            CircleAvatar(
+              backgroundImage: NetworkImage("https://scontent-lht6-1.xx.fbcdn.net/v/t1.0-9/11230099_10206835592669367_2911893136176495642_n.jpg?_nc_cat=0&oh=eb80db39d72968cc4a130d4d075ea24a&oe=5BE80A4C",),
+            ),
+            Expanded(
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Myname",
+                            style: Theme
+                                .of(context)
+                                .textTheme
+                                .body1
+                                .apply(fontWeightDelta: 700),
+                          ),]
+                    )
+                )
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                  "textttt",
+                  style: TextStyle(
+                    fontWeight: FontWeight.normal,)
+                //fontFamily: UIData.ralewayFont),
+              ),
+            )
+          ]
+      )
+  )
+          ]
+      )
+  );
 
   Widget bodyList(List<Post> posts) => SliverList(
     delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+
       return Padding(
         padding: const EdgeInsets.all(8.0),
         child: postCard(context, posts[index]),
@@ -119,6 +174,7 @@ class _TimeLineState extends State<TimeLine> {
     return
         CustomScrollView(
                 slivers: <Widget>[
+                  //statusBox(),
                   bodyList(posts),
                 ],
               );
@@ -126,6 +182,17 @@ class _TimeLineState extends State<TimeLine> {
 
   @override
   Widget build(BuildContext context) {
-    return bodySliverList();
+    return Stack(
+      children: <Widget>[
+        bodySliverList(),
+        widget._showSearch?searchArea():Text('')
+      ],
+    );
   }
+  Widget searchArea()=>new Container(
+    color: Colors.white.withOpacity(0.9),
+    child: Center(child: Text("Search here"),),
+  );
+
+
 }

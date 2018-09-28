@@ -253,7 +253,9 @@ class CommonDrawer extends StatelessWidget {
             ),
           ),
           Divider(),
-          new AboutListTile()
+          new AboutListTile(
+            icon: Icon(Icons.info),
+          )
         ],
       ),
     );

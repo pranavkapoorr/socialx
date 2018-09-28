@@ -134,24 +134,28 @@ class _TimeLineState extends State<TimeLine>{
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            "Myname",
+                            "Pranav Kapoor",
                             style: Theme
                                 .of(context)
                                 .textTheme
                                 .body1
                                 .apply(fontWeightDelta: 700),
-                          ),]
+                          ),
+                        TextField(
+                          textAlign: TextAlign.left,
+                          decoration: InputDecoration(
+                              hintText: "What's on your mind?",
+                              hintStyle: TextStyle(fontSize: 13.0,color: Colors.grey)
+                          ),
+                        )
+
+                        ]
                     )
                 )
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(
-                  "textttt",
-                  style: TextStyle(
-                    fontWeight: FontWeight.normal,)
-                //fontFamily: UIData.ralewayFont),
-              ),
+              child: IconButton(icon: Icon(Icons.send), onPressed: (){})
             )
           ]
       )
@@ -184,7 +188,12 @@ class _TimeLineState extends State<TimeLine>{
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        bodySliverList(),
+        Column(
+          children: <Widget>[
+            statusBox(),
+            Expanded(child: bodySliverList()),
+          ],
+        ),
         widget._showSearch?searchArea():Text('')
       ],
     );

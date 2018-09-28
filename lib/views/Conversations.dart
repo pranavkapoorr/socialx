@@ -49,13 +49,10 @@ class _ChatScreenState extends State<ChatScreen> {
     return ListView.builder(
       itemCount: _chatters.length,
       itemBuilder: (context, i) =>
-      new Column(
-        children: <Widget>[
-          i!=0?new Divider(
-            indent: 85.0,
-            height: 0.0,
-          ):new Container(width: 0.0,height: 0.0,),
-          new ListTile(
+      Padding(
+        padding: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
+        child: Card(
+          child: new ListTile(
             leading: new CircleAvatar(
               foregroundColor: Theme
                   .of(context)
@@ -98,8 +95,8 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
               );
             },
-          )
-        ],
+          ),
+        ),
       ),
     );
   }

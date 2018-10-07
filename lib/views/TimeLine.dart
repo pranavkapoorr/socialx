@@ -178,7 +178,6 @@ class _TimeLineState extends State<TimeLine>{
     return
         CustomScrollView(
                 slivers: <Widget>[
-                  //statusBox(),
                   bodyList(posts),
                 ],
               );

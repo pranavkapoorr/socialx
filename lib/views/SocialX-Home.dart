@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:socialx/views/Conversations.dart';
 import 'package:socialx/views/Profile.dart';
 import 'package:socialx/views/TimeLine.dart';
-import 'package:socialx/views/utils/utils.dart';
+
 class SocialXHome extends StatefulWidget {
   @override
   _SocialXHomeState createState()=> new _SocialXHomeState();
@@ -78,8 +78,17 @@ class _SocialXHomeState extends State<SocialXHome> with TickerProviderStateMixin
   }
 
   Widget _scaffold() => Scaffold(
-    appBar: _showSearch?searchAppBar():new AppBar(
-      title: Text(_page==0?"Profile":_page==1?"Feed":"Conversations"),
+    /*appBar: _showSearch?searchAppBar():new AppBar(
+      leading: _page==0?IconButton(icon: Icon(Icons.settings), onPressed: (){}):Text(''),
+      centerTitle: true,
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Icon(_page==0?Icons.person:_page==1?Icons.timeline:Icons.chat_bubble),
+          SizedBox(width: 10.0,),
+          Text(_page==0?"Profile":_page==1?"Feed":"Messenger"),
+        ],
+      ),
       actions: <Widget>[
         _page==0?new IconButton(icon: Icon(Icons.edit), onPressed: (){}):Text(''),
         _page==1?new IconButton(icon: Icon(Icons.search), onPressed: (){
@@ -88,18 +97,20 @@ class _SocialXHomeState extends State<SocialXHome> with TickerProviderStateMixin
           });
         }):Text(''),
       ],
-    ),
-    body: _loaded?new PageView(
-      children: <Widget>[
-        new Profile(),
-        new TimeLine(_showSearch),
-        new ChatScreen()
-      ],
-      controller: _pageController,
-      onPageChanged: onPageChanged,
+    ),*/
+    body: _loaded?Padding(
+      padding: const EdgeInsets.only(top:24.0),
+      child: new PageView(
+        children: <Widget>[
+          new Profile(),
+          new TimeLine(_showSearch),
+          new ChatScreen()
+        ],
+        controller: _pageController,
+        onPageChanged: onPageChanged,
+      ),
     ):Center(child: CircularProgressIndicator(),),
     backgroundColor: Colors.blue.shade50,//new Color(#FFE3F2FD),
-    drawer: new CommonDrawer(),
     floatingActionButton:new FloatingActionButton(child: Icon(Icons.home,color: _page==1?Colors.white:Colors.black,size: _page==1?40.0:30.0,),onPressed: ()=>_navigationTapped(1)),
     floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     bottomNavigationBar: new BottomAppBar(
@@ -167,6 +178,80 @@ class _SocialXHomeState extends State<SocialXHome> with TickerProviderStateMixin
         curve: Curves.ease
     );
   }
+  Widget myDrawer() => new Drawer(
+    child: ListView(
+      padding: EdgeInsets.zero,
+      children: <Widget>[
+        UserAccountsDrawerHeader(
+          accountName: Text(
+            "Pranav Kapoor",
+          ),
+          accountEmail: Text(
+            "pranavkapoorr@gmail.com",
+          ),
+          currentAccountPicture: new CircleAvatar(
+            backgroundImage: new NetworkImage(
+                "https://scontent.fyyz1-1.fna.fbcdn.net/v/t1.0-1/p320x320/11230099_10206835592669367_2911893136176495642_n.jpg?_nc_cat=111&oh=005e87a02bccaf399b5152534993298c&oe=5C2A1D27"),
+          ),
+        ),
+        new ListTile(
+          title: Text(
+            "Profile",
+            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
+          ),
+          leading: Icon(
+            Icons.person,
+            color: Colors.blue,
+          ),
+        ),
+        new ListTile(
+          title: Text(
+            "Shopping",
+            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
+          ),
+          leading: Icon(
+            Icons.shopping_cart,
+            color: Colors.green,
+          ),
+        ),
+        new ListTile(
+          title: Text(
+            "Dashboard",
+            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
+          ),
+          leading: Icon(
+            Icons.dashboard,
+            color: Colors.red,
+          ),
+        ),
+        new ListTile(
+          title: Text(
+            "Timeline",
+            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
+          ),
+          leading: Icon(
+            Icons.timeline,
+            color: Colors.cyan,
+          ),
+        ),
+        Divider(),
+        new ListTile(
+          title: Text(
+            "Settings",
+            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
+          ),
+          leading: Icon(
+            Icons.settings,
+            color: Colors.brown,
+          ),
+        ),
+        Divider(),
+        new AboutListTile(
+          icon: Icon(Icons.info),
+        )
+      ],
+    ),
+  );
 
   @override
   void dispose() {

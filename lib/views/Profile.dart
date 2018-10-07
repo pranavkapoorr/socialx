@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:socialx/views/editprofile.dart';
+import 'package:socialx/views/settings.dart';
 import 'package:socialx/views/utils/utils.dart';
 
 class Profile extends StatefulWidget{
@@ -21,7 +23,7 @@ class _ProfileState extends State<Profile>{
           children: <Widget>[
             ProfileTile(
               title: "Pranav Kapoor",
-              subtitle: "Developer",
+              subtitle: "London",
             ),
             SizedBox(
               height: 10.0,
@@ -30,9 +32,11 @@ class _ProfileState extends State<Profile>{
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 IconButton(
-                  icon: Icon(Icons.chat),
+                  icon: Icon(Icons.settings),
                   //color: Colors.black,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, new MaterialPageRoute(builder: (context) => new Settings()));
+                  },
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -51,9 +55,11 @@ class _ProfileState extends State<Profile>{
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.call),
+                  icon: Icon(Icons.edit),
                   //color: Colors.black,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, new MaterialPageRoute(builder: (context) => new EditProfile()));
+                  },
                 ),
               ],
             )

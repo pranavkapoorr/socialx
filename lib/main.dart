@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:socialx/views/SocialX-Home.dart';
+import 'package:socialx/views/logopage.dart';
 
 void main() => runApp(new MyApp());
 
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       theme: new ThemeData(
         primaryColor: Colors.black,
       ),
-      home: SocialXHome(),
+      home: LogoPage(),
     );
   }
 }

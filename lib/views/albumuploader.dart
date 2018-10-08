@@ -41,7 +41,7 @@ class _AlbumUploader extends State<AlbumUploader> {
       decoration: BoxDecoration(color: Colors.white),
       child: IconButton(
           icon: Icon(Icons.add), onPressed:getImage),);
-    var image = _makeImageBox(Image.asset("images/bg.jpg",fit: BoxFit.cover,));
+    var image = _makeImageBox(Image.network("https://ichef.bbci.co.uk/news/660/cpsprodpb/37B5/production/_89716241_thinkstockphotos-523060154.jpg",fit: BoxFit.cover,));
     for(int i = 0; i < count; i++){
       _imageTiles.add(i==0?addImageTile:image);
     }
@@ -53,18 +53,14 @@ class _AlbumUploader extends State<AlbumUploader> {
         decoration: BoxDecoration(gradient: myGradient,),
         child: new Scaffold(
             backgroundColor: Colors.transparent,
-            appBar: new AppBar(title: new Text(
-              "Manage Album", style: TextStyle(color: Colors.white),),
-              backgroundColor: Colors.transparent,),
+            appBar: new AppBar(
+              title: new Text("Manage Album", style: TextStyle(color: Colors.white),),
+              backgroundColor: Colors.transparent,
+              elevation: 0.0,
+            ),
             body: Container(
               padding: const EdgeInsets.all(8.0),
               decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                        blurRadius: .5,
-                        spreadRadius: 1.0,
-                        color: Colors.black.withOpacity(.12))
-                  ],
                   borderRadius: BorderRadius.all(Radius.circular(5.0))
               ),
               child: GridView(

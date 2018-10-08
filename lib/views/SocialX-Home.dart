@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:socialx/views/Conversations.dart';
 import 'package:socialx/views/Profile.dart';
 import 'package:socialx/views/TimeLine.dart';
+import 'package:socialx/views/settings.dart';
+import 'package:socialx/views/utils/utils.dart';
 
 class SocialXHome extends StatefulWidget {
   @override
@@ -31,10 +33,10 @@ class SocialXHome extends StatefulWidget {
   }
 }
 
-class _SocialXHomeState extends State<SocialXHome> with TickerProviderStateMixin{
-  AnimationController _iconAnimationController;
-  Animation _iconAnimation;
+class _SocialXHomeState extends State<SocialXHome> {
+  FocusNode _focus = new FocusNode();
   PageController _pageController;
+  TextEditingController _searchController;
   bool _loaded = false;
   int _page = 1;
   bool _showSearch = false;
@@ -51,65 +53,74 @@ class _SocialXHomeState extends State<SocialXHome> with TickerProviderStateMixin
     super.initState();
     _loaded = true;
     _pageController = new PageController(initialPage: 1);
-    _iconAnimationController = new AnimationController(
-        vsync: this, duration: new Duration(seconds: 1));
-    _iconAnimation = new CurvedAnimation(
-      parent: _iconAnimationController,
-      curve: Curves.easeIn,
-    );
-    _iconAnimation.addListener(() => this.setState(() {}));
+    _searchController = new TextEditingController();
+    _focus.addListener(_onFocusChange);
 
   }
+  void _onFocusChange(){
+    print("Focus: "+_focus.hasFocus.toString());
+    if(_focus.hasFocus){
+      setState(() {
+        _showSearch = true;
+      });
+    }else{
+      setState(() {
+        _showSearch = false;
+      });
+    }
+  }
+
   Widget searchAppBar(){
-    _iconAnimationController.forward();
-    var searchBar = new ListTile(title: new TextField(decoration: new InputDecoration(hintText: "         search here",suffixIcon: new Icon(Icons.search),border: InputBorder.none),));
   return new AppBar(
-    leading: new IconButton(icon: new Icon(Icons.arrow_back), onPressed: (){setState(() {
-      _showSearch = false;
-      _iconAnimationController.reset();
-    });}),
-    title: Container(
-      alignment: Alignment.center,
-      decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(5.0)),
-      child: searchBar,
-      width: _iconAnimation.value * 1400.0,height: 40.0,
+    leading: IconButton(
+      icon: Icon(Icons.settings),
+      //color: Colors.black,
+      onPressed: () {
+        Navigator.push(context, new MaterialPageRoute(builder: (context) => new Settings()));
+      },
+    ),
+    title: GestureDetector(
+      onTap: (){
+        setState(() {
+          _showSearch = true;
+        });
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical:15.0),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(5.0)),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal:8.0),
+          child: TextFormField(
+            controller: _searchController,
+            decoration: InputDecoration.collapsed(hintText: "Search"),
+            focusNode: _focus,
+          ),
+        ),
+      ),
     ),
   );
   }
 
   Widget _scaffold() => Scaffold(
-    /*appBar: _showSearch?searchAppBar():new AppBar(
-      leading: _page==0?IconButton(icon: Icon(Icons.settings), onPressed: (){}):Text(''),
-      centerTitle: true,
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Icon(_page==0?Icons.person:_page==1?Icons.timeline:Icons.chat_bubble),
-          SizedBox(width: 10.0,),
-          Text(_page==0?"Profile":_page==1?"Feed":"Messenger"),
-        ],
-      ),
-      actions: <Widget>[
-        _page==0?new IconButton(icon: Icon(Icons.edit), onPressed: (){}):Text(''),
-        _page==1?new IconButton(icon: Icon(Icons.search), onPressed: (){
-          setState(() {
-            _showSearch = true;
-          });
-        }):Text(''),
+    appBar: searchAppBar(),
+    body: Container(
+      decoration: BoxDecoration(gradient: myGradient),
+      child:_loaded?Stack(
+      children: <Widget>[
+        new PageView(
+          children: <Widget>[
+            new Profile(),
+            new TimeLine(),
+            new ChatScreen()
+          ],
+          controller: _pageController,
+          onPageChanged: onPageChanged,
+        ),
+        _showSearch?searchArea():Text('')
       ],
-    ),*/
-    body: _loaded?Padding(
-      padding: const EdgeInsets.only(top:24.0),
-      child: new PageView(
-        children: <Widget>[
-          new Profile(),
-          new TimeLine(_showSearch),
-          new ChatScreen()
-        ],
-        controller: _pageController,
-        onPageChanged: onPageChanged,
-      ),
     ):Center(child: CircularProgressIndicator(),),
+    ),
     backgroundColor: Colors.blue.shade50,//new Color(#FFE3F2FD),
     floatingActionButton:new FloatingActionButton(child: Icon(Icons.home,color: _page==1?Colors.white:Colors.black,size: _page==1?40.0:30.0,),onPressed: ()=>_navigationTapped(1)),
     floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -178,86 +189,29 @@ class _SocialXHomeState extends State<SocialXHome> with TickerProviderStateMixin
         curve: Curves.ease
     );
   }
-  Widget myDrawer() => new Drawer(
-    child: ListView(
-      padding: EdgeInsets.zero,
+
+  Widget searchArea()=>new Container(
+    color: Colors.white.withOpacity(0.9),
+    child: Center(child: Column(
       children: <Widget>[
-        UserAccountsDrawerHeader(
-          accountName: Text(
-            "Pranav Kapoor",
-          ),
-          accountEmail: Text(
-            "pranavkapoorr@gmail.com",
-          ),
-          currentAccountPicture: new CircleAvatar(
-            backgroundImage: new NetworkImage(
-                "https://scontent.fyyz1-1.fna.fbcdn.net/v/t1.0-1/p320x320/11230099_10206835592669367_2911893136176495642_n.jpg?_nc_cat=111&oh=005e87a02bccaf399b5152534993298c&oe=5C2A1D27"),
-          ),
-        ),
-        new ListTile(
-          title: Text(
-            "Profile",
-            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
-          ),
-          leading: Icon(
-            Icons.person,
-            color: Colors.blue,
-          ),
-        ),
-        new ListTile(
-          title: Text(
-            "Shopping",
-            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
-          ),
-          leading: Icon(
-            Icons.shopping_cart,
-            color: Colors.green,
-          ),
-        ),
-        new ListTile(
-          title: Text(
-            "Dashboard",
-            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
-          ),
-          leading: Icon(
-            Icons.dashboard,
-            color: Colors.red,
-          ),
-        ),
-        new ListTile(
-          title: Text(
-            "Timeline",
-            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
-          ),
-          leading: Icon(
-            Icons.timeline,
-            color: Colors.cyan,
-          ),
-        ),
-        Divider(),
-        new ListTile(
-          title: Text(
-            "Settings",
-            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
-          ),
-          leading: Icon(
-            Icons.settings,
-            color: Colors.brown,
-          ),
-        ),
-        Divider(),
-        new AboutListTile(
-          icon: Icon(Icons.info),
-        )
+        IconButton(icon:Icon(Icons.cancel),onPressed: (){
+          setState(() {
+            _focus.unfocus();
+            _showSearch = false;
+          });
+        },),
+        Text("Search here"),
       ],
-    ),
+    ),),
   );
 
   @override
   void dispose() {
     super.dispose();
+    _showSearch = false;
     _loaded = false;
+    _focus.removeListener(_onFocusChange);
     _pageController.dispose();
-    _iconAnimationController.dispose();
+    _searchController.dispose();
   }
 }

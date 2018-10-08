@@ -3,8 +3,6 @@ import 'package:socialx/models/post.dart';
 import 'package:socialx/views/utils/utils.dart';
 
 class TimeLine extends StatefulWidget{
-  final bool _showSearch;
-  TimeLine(this._showSearch);
 
   @override
   _TimeLineState createState()=> new _TimeLineState();
@@ -57,27 +55,33 @@ class _TimeLineState extends State<TimeLine>{
   );
 
   //column last
-  Widget actionColumn(Post post) => ButtonBar(
-    alignment: MainAxisAlignment.spaceBetween,
-    children: <Widget>[
-      IconButton(
-        icon: Icon(
-           Icons.thumb_up,
-          color: Colors.green,
+  Widget actionColumn(Post post) => Padding(
+    padding: const EdgeInsets.only(right:8.0),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        IconButton(
+          icon: Icon(
+             Icons.thumb_up,
+            color: Colors.green,
+            size: 18.0,
+          ),
+          onPressed: (){},
         ),
-        onPressed: (){},
-      ),
-      IconButton(
-        icon: Icon(
-           Icons.comment,
-          color: Colors.blue,
+        IconButton(
+          icon: Icon(
+             Icons.comment,
+            color: Colors.blue,
+            size: 18.0,
+          ),
+          onPressed: (){},
         ),
-        onPressed: (){},
-      ),
-      Text(
-        post.postTime,
-      )
-    ],
+        Text(
+          post.postTime,
+          style: TextStyle(color: Colors.grey,fontSize: 12.0,),
+        )
+      ],
+    ),
   );
 
   //post cards
@@ -85,6 +89,7 @@ class _TimeLineState extends State<TimeLine>{
     return Card(
       elevation: 2.0,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -100,7 +105,7 @@ class _TimeLineState extends State<TimeLine>{
             ),
           ),
           SizedBox(
-            height: 10.0,
+            height: 5.0,
           ),
           post.messageImage != null
               ? Image.network(
@@ -108,7 +113,7 @@ class _TimeLineState extends State<TimeLine>{
             fit: BoxFit.cover,
           )
               : Container(),
-          post.messageImage != null ? Container() : CommonDivider(),
+          post.messageImage != null ? Container() : CommonDivider(1.0),
           actionColumn(post),
         ],
       ),
@@ -129,27 +134,12 @@ class _TimeLineState extends State<TimeLine>{
             Expanded(
                 child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            "Pranav Kapoor",
-                            style: Theme
-                                .of(context)
-                                .textTheme
-                                .body1
-                                .apply(fontWeightDelta: 700),
-                          ),
-                        TextField(
-                          textAlign: TextAlign.left,
-                          decoration: InputDecoration(
-                              hintText: "What's on your mind?",
-                              hintStyle: TextStyle(fontSize: 13.0,color: Colors.grey)
-                          ),
-                        )
-
-                        ]
+                    child: TextField(
+                      textAlign: TextAlign.left,
+                      decoration: InputDecoration.collapsed(
+                          hintText: "What's on your mind?",
+                          hintStyle: TextStyle(fontSize: 13.0,color: Colors.grey)
+                      ),
                     )
                 )
             ),
@@ -185,22 +175,14 @@ class _TimeLineState extends State<TimeLine>{
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
       children: <Widget>[
-        Column(
-          children: <Widget>[
-            statusBox(),
-            Expanded(child: bodySliverList()),
-          ],
-        ),
-        widget._showSearch?searchArea():Text('')
+        statusBox(),
+        Expanded(child: bodySliverList()),
       ],
     );
   }
-  Widget searchArea()=>new Container(
-    color: Colors.white.withOpacity(0.9),
-    child: Center(child: Text("Search here"),),
-  );
+
 
 
 }

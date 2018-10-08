@@ -13,10 +13,11 @@ class _ProfileState extends State<Profile>{
 
   //Column1
   Widget profileColumn() => Padding(
-    padding: const EdgeInsets.fromLTRB(8.0,8.0,8.0,0.0),
-    child: Card(
-      elevation: 2.0,
+    padding: const EdgeInsets.fromLTRB(8.0,2.0,8.0,0.0),
+    child: new ClipPath(
+      clipper: MyClipper(),
       child: Container(
+        decoration: BoxDecoration(gradient: myGradient,border: Border.all(color: Colors.grey.shade300)),
         height: deviceSize.height * 0.24,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -79,12 +80,26 @@ class _ProfileState extends State<Profile>{
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 50.0),
         child: Text(
-          "Google Developer Expert for Flutter. Passionate #Flutter, #Android Developer. #Entrepreneur #YouTuber",
+          "Hi I'm Pranav. I'm Nothing..doing Everything..to be Something..!",
           style: TextStyle(fontWeight: FontWeight.w700),
           textAlign: TextAlign.center,
           maxLines: 3,
           softWrap: true,
         ),
+      ),
+    ),
+  );
+
+  Widget photosColumn() => Container(
+    color: Colors.white,
+    height: deviceSize.height * 0.13,
+    child: Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        child: Container(
+            height: deviceSize.height/10,
+            child: _album()
+        )
       ),
     ),
   );
@@ -104,15 +119,15 @@ class _ProfileState extends State<Profile>{
               children: <Widget>[
                 ProfileTile(
                   title: "Website",
-                  subtitle: "about.me/imthepk",
+                  subtitle: "pranavkapoorr.github.io",
                 ),
                 ProfileTile(
                   title: "Phone",
-                  subtitle: "+919876543210",
+                  subtitle: "+44 74887 06094",
                 ),
                 ProfileTile(
                   title: "YouTube",
-                  subtitle: "youtube.com/mtechviral",
+                  subtitle: "@pranavkapoorr",
                 ),
               ],
             ),
@@ -121,15 +136,15 @@ class _ProfileState extends State<Profile>{
               children: <Widget>[
                 ProfileTile(
                   title: "Location",
-                  subtitle: "New Delhi",
+                  subtitle: "London",
                 ),
                 ProfileTile(
                   title: "Email",
-                  subtitle: "mtechviral@gmail.com",
+                  subtitle: "pk@gmail.com",
                 ),
                 ProfileTile(
                   title: "Facebook",
-                  subtitle: "fb.com/imthepk",
+                  subtitle: "fb.com/pranavkapoorr",
                 ),
               ],
             ),
@@ -143,33 +158,32 @@ class _ProfileState extends State<Profile>{
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
-          profileColumn(),
-          CommonDivider(),
-          followColumn(deviceSize),
-          CommonDivider(),
+          Card(
+            elevation: 2.0,
+            child: Column(
+              children: <Widget>[
+                profileColumn(),
+                CommonDivider(4.0),
+                followColumn(deviceSize),
+              ],
+            ),
+          ),
+
+          CommonDivider(8.0),
           descColumn(),
-          CommonDivider(),
+          CommonDivider(8.0),
+          photosColumn(),
+          CommonDivider(8.0),
           accountColumn()
         ],
       ),
     );
   }
 
-
-
-  @override
-  Widget build(BuildContext context) {
-    deviceSize = MediaQuery.of(context).size;
-    return bodyData();
-  }
-}
-
-Widget followColumn(Size deviceSize) => Padding(
-  padding: const EdgeInsets.fromLTRB(8.0,0.0,8.0,1.0),
-  child:   Card(
-    elevation: 2.0,
+  Widget followColumn(Size deviceSize) => Padding(
+    padding: const EdgeInsets.fromLTRB(8.0,0.0,8.0,1.0),
     child:   Container(
-      height: deviceSize.height * 0.13,
+      height: deviceSize.height * 0.07,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
@@ -188,7 +202,45 @@ Widget followColumn(Size deviceSize) => Padding(
         ],
       ),
     ),
-  ),
-);
+  );
+
+  Widget _albumImage(Image image){
+    return  GestureDetector(onTap:(){onImageTap(image);},child: Container(margin: EdgeInsets.all(1.5),child:image));
+  }
+  Widget _album() {
+    List<Widget> images = [
+      _albumImage(new Image(image: NetworkImage("https://ichef.bbci.co.uk/news/660/cpsprodpb/37B5/production/_89716241_thinkstockphotos-523060154.jpg"))),
+      _albumImage(new Image(image: NetworkImage("https://ichef.bbci.co.uk/news/660/cpsprodpb/37B5/production/_89716241_thinkstockphotos-523060154.jpg"))),
+      _albumImage(new Image(image: NetworkImage("https://ichef.bbci.co.uk/news/660/cpsprodpb/37B5/production/_89716241_thinkstockphotos-523060154.jpg"))),
+      _albumImage(new Image(image: NetworkImage("https://ichef.bbci.co.uk/news/660/cpsprodpb/37B5/production/_89716241_thinkstockphotos-523060154.jpg"))),
+      _albumImage(new Image(image: NetworkImage("https://ichef.bbci.co.uk/news/660/cpsprodpb/37B5/production/_89716241_thinkstockphotos-523060154.jpg"))),
+      _albumImage(new Image(image: NetworkImage("https://ichef.bbci.co.uk/news/660/cpsprodpb/37B5/production/_89716241_thinkstockphotos-523060154.jpg"))),
+    ];
+    return Container(
+      color: Colors.black.withOpacity(0.1),
+      child: new ListView(
+          scrollDirection: Axis.horizontal,
+          children: images
+      ),
+    );
+  }
+
+  void onImageTap(Image img){
+    showDialog(context: this.context,builder:(BuildContext context)=>AlertDialog(content: Container(
+      child: img,
+    ),contentPadding: EdgeInsets.all(0.5),)
+    );
+  }
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    deviceSize = MediaQuery.of(context).size;
+    return bodyData();
+  }
+}
+
+
 
 

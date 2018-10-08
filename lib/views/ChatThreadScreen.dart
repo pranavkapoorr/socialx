@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:socialx/models/ChatMessage.dart';
 import 'package:socialx/models/ChatThread.dart';
+import 'package:socialx/views/utils/utils.dart';
 
 
 var myNum;
@@ -39,7 +40,6 @@ class _ChatThreadScreenState extends State<ChatThreadScreen> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      backgroundColor: Colors.grey[200],
       appBar: new AppBar(
         titleSpacing: 1.0,
         title: new Row(
@@ -87,7 +87,7 @@ class _ChatThreadScreenState extends State<ChatThreadScreen> {
               .platform == TargetPlatform.iOS
               ? new BoxDecoration(
               border: new Border(top: new BorderSide(color: Colors.grey[200])))
-              : null), //new
+              : BoxDecoration(gradient: myGradient),), //new
     );
   }
 

@@ -1,8 +1,3 @@
-# socialx
+# Social X
 
-socialX Application for dating
-
-## Getting Started
-
-For help getting started with Flutter, view our online
-[documentation](https://flutter.io/).
+This Application is opensource project social app for both IOS & Android devices.

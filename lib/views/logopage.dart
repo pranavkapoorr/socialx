@@ -1,8 +1,6 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:socialx/views/startuploader.dart';
-import 'package:socialx/views/utils/utils.dart';
 
 class LogoPage extends StatefulWidget{
   @override
@@ -14,59 +12,48 @@ class _LogoPageState extends State<LogoPage> {
   @override
   void initState() {
     super.initState();
-    new Timer(const Duration(seconds: 3), onClose);
+    new Timer(const Duration(seconds: 5), onClose);
   }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
         body: Container(
+          width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-                gradient: myGradient
-              /*LinearGradient(
-                    colors: [Colors.grey.shade300, Colors.grey.shade500, Colors.grey.shade300]
-                )*/
+                gradient: RadialGradient(
+                    tileMode: TileMode.mirror,
+                    colors: [Colors.blue.shade100,Colors.blue.shade50]
+                )
             ),
-            child: Stack(
-                children: <Widget>[
-                  Theme(
-                      data: new ThemeData(
-                          brightness: Brightness.light,
-                          inputDecorationTheme: new InputDecorationTheme(
-                            // hintStyle: new TextStyle(color: Colors.blue, fontSize: 20.0),
-                            labelStyle:
-                            new TextStyle(
-                                color: Colors.tealAccent, fontSize: 25.0),
-                          )),
-                      isMaterialAppTheme: true,
-                      child: new Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(40.0),
-                              child: new Image(
-                                color: Colors.black87,
-                                fit: BoxFit.scaleDown,
-                                image: new AssetImage("images/logo.png"),
+            child: Padding(
+              padding: new EdgeInsets.symmetric(vertical:MediaQuery.of(context).size.height/6),
+              child: new Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(40.0),
+                      child: new Image(
+                        //color: Colors.black87,
+                        fit: BoxFit.scaleDown,
+                        image: new AssetImage("images/logo.png"),
+                      ),
+                    ),
+                    new Container(
+                        padding: const EdgeInsets.all(20.0),
+                        child: new Column(
+                            mainAxisAlignment: MainAxisAlignment
+                                .start,
+                            children: <Widget>[
+                              new Container(
+                                  height: 50.0,
+                                  width: 170.0,
+                                  //color: Colors.grey.shade400,
+                                  child: Image(image: new AssetImage("images/earth_loader.gif")),
                               ),
-                            ),
-                            new Container(
-                                padding: const EdgeInsets.all(20.0),
-                                child: new Column(
-                                    mainAxisAlignment: MainAxisAlignment
-                                        .start,
-                                    children: <Widget>[
-                                      new Container(
-                                          height: 50.0,
-                                          width: 170.0,
-                                          //color: Colors.grey.shade400,
-                                          child: Image(image: new AssetImage("images/earth_loader.gif")),
-                                      ),
-                                    ])
-                            )
-                          ])
-                  )
-                ]
+                            ])
+                    )
+                  ]),
             )
         )
     );
